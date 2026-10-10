@@ -1,7 +1,13 @@
 package com.ryo.arora.domain.service;
 
-import org.springframework.stereotype.Service;
+import com.ryo.arora.domain.entity.UserDomainEntity;
+import com.ryo.arora.infrastructure.persistence.entity.UserEntity;
 
-@Service
-public class UserService {
+public interface UserService {
+
+    UserEntity save(UserDomainEntity user);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

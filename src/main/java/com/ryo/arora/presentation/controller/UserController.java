@@ -1,24 +1,27 @@
 package com.ryo.arora.presentation.controller;
 
-import com.ryo.arora.application.dto.request.CreateUserRequest;
-import com.ryo.arora.application.handler.ServiceDispatcher;
-import com.ryo.arora.application.command.CreateUserCommand;
+import com.ryo.arora.presentation.dto.user.request.CreateUserRequest;
+import com.ryo.arora.domain.handler.core.ServiceDispatcher;
+import com.ryo.arora.presentation.dto.user.condition.CreateUserConditionEntity;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController{
 
     private final ServiceDispatcher serviceDispatcher;
 
-    @PostMapping
+    @PostMapping("/register")
     public Object createUser(
-            @RequestBody CreateUserRequest request
+            @Valid @RequestBody CreateUserRequest request
     ) {
-        return serviceDispatcher.execute(CreateUserCommand
+        return this.serviceDispatcher.execute(CreateUserConditionEntity
                 .builder()
                 .username(request.getUsername())
                 .password(request.getPassword())
@@ -28,4 +31,5 @@ public class UserController{
                 .doB(request.getDoB())
                 .build());
     }
+
 }
